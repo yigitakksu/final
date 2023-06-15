@@ -1,0 +1,142 @@
+import java.time.*;
+import java.util.*;
+
+class Ucak {
+    private String model;
+    private String marka;
+    private String seriNo;
+    private int koltukKapasitesi;
+
+    public Ucak(String model, String marka, String seriNo, int koltukKapasitesi) {
+        this.model = model;
+        this.marka = marka;
+        this.seriNo = seriNo;
+        this.koltukKapasitesi = koltukKapasitesi;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getMarka() {
+        return marka;
+    }
+
+    public String getSeriNo() {
+        return seriNo;
+    }
+
+    public int getKoltukKapasitesi() {
+        return koltukKapasitesi;
+    }
+}
+
+enum Durum {
+    Aktif,
+    Pasif
+}
+
+class Lokasyon {
+    private String ulke;
+    private String sehir;
+    private String havaalani;
+    private Durum durum;
+
+    public Lokasyon(String ulke, String sehir, String havaalani, Durum durum) {
+        this.ulke = ulke;
+        this.sehir = sehir;
+        this.havaalani = havaalani;
+        this.durum = durum;
+    }
+
+    public String getUlke() {
+        return ulke;
+    }
+
+    public String getSehir() {
+        return sehir;
+    }
+
+    public String getHavaalani() {
+        return havaalani;
+    }
+
+    public Durum getDurum() {
+        return durum;
+    }
+}
+
+class Rezervasyon {
+    private int id;
+    private LocalDate tarih;
+    private Ucak ucak;
+    private Lokasyon nereden;
+    private Lokasyon nereye;
+    private byte koltukSayisi;
+    private boolean onay;
+
+    public Rezervasyon(int id, LocalDate tarih, Ucak ucak, Lokasyon nereden, Lokasyon nereye, byte koltukSayisi, boolean onay) {
+        this.id = id;
+        this.tarih = tarih;
+        this.ucak = ucak;
+        this.nereden = nereden;
+        this.nereye = nereye;
+        this.koltukSayisi = koltukSayisi;
+        this.onay = onay;
+    }
+
+    public Rezervasyon(int id, LocalDate tarih, Ucak ucak, Lokasyon nereden, Lokasyon nereye, byte koltukSayisi) {
+        this(id, tarih, ucak, nereden, nereye, koltukSayisi, false);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public LocalDate getTarih() {
+        return tarih;
+    }
+
+    public Ucak getUcak() {
+        return ucak;
+    }
+
+    public Lokasyon getNereden() {
+        return nereden;
+    }
+
+    public Lokasyon getNereye() {
+        return nereye;
+    }
+
+    public byte getKoltukSayisi() {
+        return koltukSayisi;
+    }
+
+    public boolean getOnay() {
+        return onay;
+    }
+
+    public void setOnay(boolean onay) {
+        this.onay = onay;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Ucak ucak = new Ucak("Boeing 747", "Boeing", "123ABC", 400);
+        Lokasyon nereden = new Lokasyon("Türkiye", "İstanbul", "Atatürk Havalimanı", Durum.Aktif);
+        Lokasyon nereye = new Lokasyon("ABD", "New York", "John F. Kennedy Havalimanı", Durum.Aktif);
+        LocalDate tarih = LocalDate.of(2022, 3, 15);
+        byte koltukSayisi = 2;
+        Rezervasyon rezervasyon = new Rezervasyon(1, tarih, ucak, nereden, nereye, koltukSayisi);
+
+        System.out.println("Rezervasyon ID: " + rezervasyon.getId());
+        System.out.println("Tarih: " + rezervasyon.getTarih());
+        System.out.println("Uçak: " + rezervasyon.getUcak().getMarka() + " " + rezervasyon.getUcak().getModel() + " (" + rezervasyon.getUcak().getSeriNo() + ")");
+        System.out.println("Nereden: " + rezervasyon.getNereden().getHavaalani() + ", " + rezervasyon.getNereden().getSehir() + ", " + rezervasyon.getNereden().getUlke());
+        System.out.println("Nereye: " + rezervasyon.getNereye().getHavaalani() + ", " + rezervasyon.getNereye().getSehir() + ", " + rezervasyon.getNereye().getUlke());
+        System.out.println("Koltuk Sayısı: " + rezervasyon.getKoltukSayisi());
+        System.out.println("Rezervasyon Onayı: " + rezervasyon.getOnay());
+    }
+}
